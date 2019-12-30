@@ -1,4 +1,5 @@
-﻿# ziplsit的特点简单介绍：  
+https://blog.csdn.net/chenxun_2010/article/details/103762794
+# ziplsit的特点简单介绍：  
 ziplist其实就是分配一块连续的内存，用指针和位操作来操作内存的一种高效的数据结构。
 1. Ziplist 能存储strings和integer值，整型值被存储为实际的整型值而不是字符数组
 2. Ziplist 是为了尽可能节约内存而设计相当特殊的双端队列
@@ -62,7 +63,7 @@ ziplist其实就是分配一块连续的内存，用指针和位操作来操作�
  +----------+-----------+-------+
  
 ```
-**prevlen**：用来表示前一个元素entry的字节长度，prevlen元素本身存储在计算机所需要占用内存大小要么是1个字节，要么是5个字节，如果前一个元素的字节长度（占用的内存）小于154，那么prevlen占用1一个字节，如果前一个元素>=254字节，prevlen占用5个字节，此时prevlen第一个字节固定为0XFE(254),prevlen的后四字节才真正用来表示前一个元素的长度。
+**prevlen**：用来表示前一个元素entry的字节长度，redis规定prevlen元素本身存储在计算机所需要占用内存大小要么是1个字节，要么是5个字节，如果前一个元素的字节长度（占用的内存）小于254，那么prevlen占用1一个字节，如果前一个元素>=254字节，prevlen占用5个字节，此时prevlen第一个字节固定为0XFE(254),prevlen的后四字节才真正用来表示前一个元素的长度。
 
 **encoding**： value的编码（编码元素的类型int还是表示字符串的字节数组/value的长度）  
 
@@ -71,14 +72,15 @@ ziplist其实就是分配一块连续的内存，用指针和位操作来操作�
 # 压缩列表元素的encoding编码规则介绍：
 
 **ziplist的元素能存储int和字符串类型**  
-**先介绍字符串编码**：此时encoding 存贮类型和len  
+**先介绍字符串编码**：此时encoding 存贮类型和len
 encoding | 占用字节  | 存贮结构encode/len | 字符串长度范围|len取值
+---|---|---|---|----|
 ZIP_STR_06B |1字节| 00XXXXXX|长度<64|	后6位
 ZIP_STR_14B	|2字节|	01XXXXXX XXXXXXXX|	长度<16384|	后14位2^14-1
 ZIP_STR_32B	|5字节|	10000000 XXXXXXXX XXXXXXXX XXXXXXXX XXXXXXXX|长度=<2^32-1	|32位
 
 **int编码：由于整型的长度是固定的，因此 只需存储encoding信息，length值可根据编码进行计算得出。**
-encoding|	占用字节|	存储结构|	取值范围  
+encoding|	占用字节|	存储结构|	取值范围
 ---|---|---|---|
 ZIP_INT_XX|	1字节|	11 11 0001~11111101|	0~12
 ZIP_INT_8B|	1字节|	11 11 1110|	-2^8~2^8-1
@@ -658,7 +660,6 @@ unsigned char *__ziplistDelete(unsigned char *zl, unsigned char *p, unsigned int
     return zl;
 }
 ```
-
 
 
 
