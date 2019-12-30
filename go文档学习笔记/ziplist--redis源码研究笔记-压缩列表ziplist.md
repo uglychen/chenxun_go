@@ -1,4 +1,5 @@
-﻿# ziplsit的特点简单介绍：  
+https://blog.csdn.net/chenxun_2010/article/details/103762794
+# ziplsit的特点简单介绍：  
 ziplist其实就是分配一块连续的内存，用指针和位操作来操作内存的一种高效的数据结构。
 1. Ziplist 能存储strings和integer值，整型值被存储为实际的整型值而不是字符数组
 2. Ziplist 是为了尽可能节约内存而设计相当特殊的双端队列
