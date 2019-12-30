@@ -127,7 +127,7 @@ type bmap struct {
 
 查看下图： B=5 表示hmap的有2^5=32个bmap：buckets是一个bmap数组，其长度为32。 每个bmap有8个key
 
-![1](AEA8E8EC037D4100A42F5AE308A62C3A)
+![1](https://github.com/uglychen/chenxun_go/blob/master/go%E6%96%87%E6%A1%A3%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/images/1.png)
 
 ## hmap的数据结构
 
