@@ -73,7 +73,7 @@ ziplist其实就是分配一块连续的内存，用指针和位操作来操作�
 **ziplist的元素能存储int和字符串类型**  
 **先介绍字符串编码**：此时encoding 存贮类型和len
 encoding | 占用字节  | 存贮结构encode/len | 字符串长度范围|len取值
----|---|---|---|----|
+------------ | ------------- | ------------- | ------------- | -------------
 ZIP_STR_06B |1字节| 00XXXXXX|长度<64|	后6位
 ZIP_STR_14B	|2字节|	01XXXXXX XXXXXXXX|	长度<16384|	后14位2^14-1
 ZIP_STR_32B	|5字节|	10000000 XXXXXXXX XXXXXXXX XXXXXXXX XXXXXXXX|长度=<2^32-1	|32位
