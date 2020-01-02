@@ -50,6 +50,8 @@ slice 扩容必然会导致内存拷贝，如果是性能敏感的系统中，�
 ```
 var arr = make([]int, 0, 10)
 ```
+
+```
 func growslice(et *_type, old slice, cap int) slice {
 
     if et.size == 0 {
@@ -130,6 +132,8 @@ func growslice(et *_type, old slice, cap int) slice {
 
     return slice{p, old.len, newcap}
 }
+```
+
 
 # slice的append()函数
 
