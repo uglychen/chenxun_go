@@ -1,6 +1,7 @@
 写这篇文章之前考虑一个问题：
 - [ ]     **go里面都是值传递，不存在引用传递？**
-  
+  https://cloud.tencent.com/developer/article/1416563  
+
 先来总结一下slice、map、chan的特性：  
 **slice：**  
 ```
@@ -110,3 +111,66 @@ func modify2(slice *[]int)
 ```
 参考资料：https://www.cnblogs.com/junneyang/p/6074786.html
 
+# map作为参数
+```
+func makemap(t *maptype, hint int, h *hmap) *hmap
+```
+
+在函数内部可以修改map
+```
+package main
+
+import "fmt"
+
+func modify1(m map[string]string){
+
+	for key,_ := range m{
+		m[key] = "chen"
+	}
+
+	m["chen"] = "xun"
+	//fmt.Println("修改之后的map：", m)
+}
+
+
+func main(){
+
+	m := map[string]string{ // :=创建
+		"name": "小明",
+		"age":  "18",
+	}
+
+	fmt.Println("修改之前的map：", len(m),  m)
+	modify1(m)
+	fmt.Println("修改之前的map：", len(m),  m)
+
+}
+```
+# chan作为参数
+
+```
+func makechan(t *chantype, size int) *hchan 
+```
+也就是make() chan的返回值为一个hchan类型的指针，因此当我们的业务代码在函数内对channel操作的同时，也会影响到函数外的数值。
+```
+package main
+
+import "fmt"
+
+func test_chan2(ch chan string){
+	fmt.Printf("inner: %v, %v\n",ch, len(ch))
+	ch<-"b"
+	fmt.Printf("inner: %v, %v\n",ch, len(ch))
+}
+
+func main() {
+	ch := make(chan string, 10)
+	ch<- "a"
+
+	fmt.Printf("outer: %v, %v\n",ch, len(ch))
+	test_chan2(ch)
+	fmt.Printf("outer: %v, %v\n",ch, len(ch))
+}
+```
+
+参考资料：https://zhuanlan.zhihu.com/p/54988753
